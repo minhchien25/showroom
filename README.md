@@ -1,4 +1,4 @@
-Phần mềm quản lí showroom ô tô
+Phần mềm quản lý showroom ô tô
 
 Tên thành viên nhóm 1:
 - Nguyễn Trung Hiếu 
@@ -7,6 +7,6 @@ Tên thành viên nhóm 1:
 - Hoàng Việt Tiệp
 
 Mô tả về dự án:
-Xây dựng 1 hệ thống phần mềm giúp quản lý toàn diện các hoạt động kinh doanh tại showroom ô tô như quản lý xe, khách hàng, nhân viên, mua bán, tồn kho, dịch vụ hậu mãi.. từ đó nâng cao hiệu quả vận hành và tối ưu quy trình bán hàng.
+Xây dựng 1 hệ thống phần mềm giúp quản lý toàn diện các hoạt động kinh doanh tại showroom ô tô từ nhập hàng, bán hàng, quản lý tồn kho đến chăm sóc khách hàng ..., từ đó nâng cao hiệu quả vận hành và tối ưu quy trình bán hàng.
 
 
