@@ -151,35 +151,6 @@ public class CarDAO {
             }
         }
 
-        // // Test thử thêm xe (bỏ comment để chạy)
-        // System.out.println("\nĐang thử thêm xe mới...");
-        // Car newCar = new Car(0, "Test Car", "Test Manufacturer", 2025, "Black", "Sedan", 500000000, 5, "Đây là xe test");
-        // carDAO.addCar(newCar);
-        // carList = carDAO.getAllCars();
-        // System.out.println("Danh sách xe sau khi thêm:");
-        // for (Car car : carList) {
-        //     System.out.println(car.toString());
-        // }
-
-        // // Test thử sửa xe (bạn cần biết ID của xe muốn sửa, ví dụ ID = 1)
-        // System.out.println("\nĐang thử sửa xe có ID = 1...");
-        // Car carToUpdate = carDAO.getCarById(1);
-        // if (carToUpdate != null) {
-        //     carToUpdate.setSellingPrice(900000000);
-        //     carToUpdate.setQuantityInStock(3);
-        //     carDAO.updateCar(carToUpdate);
-        //     System.out.println("Thông tin xe sau khi cập nhật (ID=1): " + carDAO.getCarById(1));
-        // } else {
-        //     System.out.println("Không tìm thấy xe có ID = 1 để sửa.");
-        // }
-
-        // // Test thử xóa xe (bạn cần biết ID của xe muốn xóa, ví dụ ID = 2)
-        // System.out.println("\nĐang thử xóa xe có ID = 2...");
-        // carDAO.deleteCar(2);
-        // carList = carDAO.getAllCars();
-        // System.out.println("Danh sách xe sau khi xóa (ID=2):");
-        // for (Car car : carList) {
-        //     System.out.println(car.toString());
-        // }
+     
     }
 }
