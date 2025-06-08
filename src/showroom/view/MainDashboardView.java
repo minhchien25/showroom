@@ -109,6 +109,11 @@ private void loadDataToTable() {
         });
 
         btnEditCar.setText("Sửa Xe");
+        btnEditCar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditCarActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Quản lí khách hàng");
 
@@ -211,56 +216,85 @@ private void loadDataToTable() {
     }//GEN-LAST:event_btnAddCarActionPerformed
     
     
-    private void btnEditCarActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        System.out.println("Debug: Nút Sửa Xe được nhấn."); // Dòng debug
-        int selectedRow = tblCars.getSelectedRow();
-        System.out.println("Debug: Hàng được chọn: " + selectedRow); // Dòng debug
-
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn một chiếc xe để sửa.", "Thông báo", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        try {
-            // Lấy ID của xe từ cột đầu tiên (cột 0) của hàng đã chọn
-            int carIdToEdit = (int) tblCars.getValueAt(selectedRow, 0);
-            System.out.println("Debug: ID xe lấy từ bảng để sửa: " + carIdToEdit); // Dòng debug
-
-            // Lấy toàn bộ thông tin đối tượng Car từ CSDL
-            // carDAO đã được khởi tạo ở constructor của MainDashboardView
-            Car carToLoad = this.carDAO.getCarById(carIdToEdit); 
-
-            if (carToLoad != null) {
-                System.out.println("Debug: Đã lấy được xe: " + carToLoad.getCarName()); // Dòng debug
-                System.out.println("Debug: Chuẩn bị mở EditCarDialog."); // Dòng debug
-                
-                // Mở EditCarDialog và truyền đối tượng Car cần sửa, cùng với tham chiếu đến MainDashboardView (this)
-                EditCarDialog editDialog = new EditCarDialog(this, true, carToLoad, this);
-                editDialog.setVisible(true); // Chương trình sẽ dừng ở đây cho đến khi editDialog đóng
-                
-                System.out.println("Debug: EditCarDialog đã đóng."); // Dòng debug
-                // Việc làm mới bảng sẽ được EditCarDialog gọi thông qua refreshCarTableData()
-                // nếu bạn đã code như vậy trong EditCarDialog.
-                // Hoặc bạn có thể gọi loadDataToTable() ở đây nếu muốn:
-                // loadDataToTable(); 
-            } else {
-                System.out.println("Debug: Không tìm thấy xe với ID " + carIdToEdit + " từ DAO."); // Dòng debug
-                JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin xe để sửa (ID: " + carIdToEdit + ").", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
-
-        } catch (Exception e) {
-            System.out.println("Debug: Lỗi trong btnEditCarActionPerformed: " + e.getMessage()); // Dòng debug
-            JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi chuẩn bị sửa xe: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace(); 
-        }
-    }                                          
 
     
     
     private void btnDeleteCarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCarActionPerformed
-       
+        int selectedRow = tblCars.getSelectedRow();
+
+    // 2. Kiểm tra xem người dùng đã chọn hàng nào chưa
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một chiếc xe để xóa.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        return; // Không làm gì cả nếu chưa chọn
+    }
+
+    // 3. Hiển thị hộp thoại xác nhận trước khi xóa
+    int confirm = JOptionPane.showConfirmDialog(this,
+            "Bạn có chắc chắn muốn xóa chiếc xe này không?",
+            "Xác nhận xóa",
+            JOptionPane.YES_NO_OPTION);
+
+    // 4. Nếu người dùng không đồng ý (chọn NO hoặc đóng hộp thoại) thì dừng lại
+    if (confirm != JOptionPane.YES_OPTION) {
+        return;
+    }
+
+    try {
+        // 5. Lấy ID của xe từ cột đầu tiên (cột 0) của hàng đã chọn
+        //    Lưu ý: Cột ID phải là cột đầu tiên trong JTable của bạn
+        int carIdToDelete = (int) tblCars.getValueAt(selectedRow, 0);
+
+        // 6. Gọi phương thức deleteCar từ CarDAO (carDAO đã được khởi tạo)
+        carDAO.deleteCar(carIdToDelete); //
+
+        // 7. Thông báo thành công và tải lại dữ liệu mới lên bảng
+        JOptionPane.showMessageDialog(this, "Đã xóa xe thành công!");
+        loadDataToTable(); // Gọi lại hàm để làm mới bảng
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi xóa xe: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace(); // In lỗi ra console để debug
+    }
     }//GEN-LAST:event_btnDeleteCarActionPerformed
 
+    private void btnEditCarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCarActionPerformed
+      int selectedRow = tblCars.getSelectedRow();
+
+    // BƯỚC 2: Kiểm tra xem có hàng nào được chọn không
+    if (selectedRow == -1) {
+        // NẾU KHÔNG CHỌN, HIỆN THÔNG BÁO NÀY
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một chiếc xe để sửa.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        return; // và kết thúc
+    }
+
+    try {
+        // BƯỚC 3: Lấy ID xe từ hàng đã chọn
+        int carIdToEdit = Integer.parseInt(tblCars.getValueAt(selectedRow, 0).toString());
+
+        // BƯỚC 4: Tìm xe trong database bằng ID
+        Car carToEdit = carDAO.getCarById(carIdToEdit);
+
+        // BƯỚC 5: Kiểm tra xem có tìm thấy xe không
+        if (carToEdit != null) {
+            // NẾU TÌM THẤY, HIỆN DIALOG SỬA XE
+            EditCarDialog editDialog = new EditCarDialog(this, true);
+            editDialog.loadCarData(carToEdit);
+            editDialog.setVisible(true);
+            loadDataToTable();
+        } else {
+            // NẾU KHÔNG TÌM THẤY, HIỆN THÔNG BÁO NÀY
+            JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin xe để sửa.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (Exception e) {
+        // NẾU CÓ LỖI BẤT KỲ, HIỆN THÔNG BÁO NÀY
+        JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi chuẩn bị sửa xe: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace(); // và in lỗi đỏ ra console
+    }
+    }//GEN-LAST:event_btnEditCarActionPerformed
+    
+   
+    
     public void refreshCarTableData() {
     loadDataToTable();
 }
