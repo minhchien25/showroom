@@ -4,6 +4,7 @@ package showroom.view;
 import showroom.model.Car;
 import showroom.DAO.CarDAO;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -71,8 +72,8 @@ private void loadDataToTable() {
         btnDeleteCar = new javax.swing.JButton();
         btnAddCar = new javax.swing.JButton();
         btnEditCar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnQuanLyKhachHang = new javax.swing.JButton();
+        btnThongKe = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -114,9 +115,14 @@ private void loadDataToTable() {
             }
         });
 
-        jButton1.setText("Quản lí khách hàng");
+        btnQuanLyKhachHang.setText("Quản lí khách hàng");
+        btnQuanLyKhachHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuanLyKhachHangActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Thống kê");
+        btnThongKe.setText("Thống kê");
 
         jLabel2.setText("CHỨC NĂNG");
 
@@ -134,11 +140,11 @@ private void loadDataToTable() {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1))
+                        .addComponent(btnQuanLyKhachHang))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnThongKe, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(4, 4, 4)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -177,9 +183,9 @@ private void loadDataToTable() {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDeleteCar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnQuanLyKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(btnThongKe)))
                 .addGap(7, 7, 7))
         );
 
@@ -285,6 +291,17 @@ private void loadDataToTable() {
         e.printStackTrace(); // và in lỗi đỏ ra console
     }
     }//GEN-LAST:event_btnEditCarActionPerformed
+
+    private void btnQuanLyKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuanLyKhachHangActionPerformed
+        JFrame customerFrame = new JFrame("Quản Lý Khách Hàng");
+
+    customerFrame.add(new CustomerManagementPanel());
+
+    customerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    customerFrame.pack();
+    customerFrame.setLocationRelativeTo(this);
+    customerFrame.setVisible(true);
+    }//GEN-LAST:event_btnQuanLyKhachHangActionPerformed
     
    
     
@@ -332,8 +349,8 @@ private void loadDataToTable() {
     private javax.swing.JButton btnAddCar;
     private javax.swing.JButton btnDeleteCar;
     private javax.swing.JButton btnEditCar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnQuanLyKhachHang;
+    private javax.swing.JButton btnThongKe;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

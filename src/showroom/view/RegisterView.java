@@ -162,7 +162,7 @@ public class RegisterView extends javax.swing.JFrame {
         // Trong thực tế, bạn phải băm (hash) mật khẩu trước khi lưu!
         newUser.setPassword(password);
         newUser.setFullName(fullName);
-        newUser.setRole("staff"); // Mặc định vai trò là nhân viên
+        newUser.setRole("customer"); 
 
         boolean success = userDAO.registerUser(newUser);
 

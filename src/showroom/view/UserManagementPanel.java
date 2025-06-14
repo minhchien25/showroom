@@ -1,21 +1,52 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package showroom.view;
 
-/**
- *
- * @author Admin
- */
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import showroom.DAO.UserDAO;
+import showroom.model.User;
 public class UserManagementPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form UserManagementPanel
-     */
+  private UserDAO userDAO;
+    private DefaultTableModel tableModel;
+    
     public UserManagementPanel() {
+       
         initComponents();
+        
+        userDAO = new UserDAO();
+    tableModel = (DefaultTableModel) tblUsers.getModel();
+
+    tableModel.setColumnIdentifiers(new Object[]{
+        "ID", "Tên đăng nhập", "Họ và Tên", "Vai trò"
+    });
+
+    cmbRole.setModel(new DefaultComboBoxModel<>(new String[] { "staff", "admin" }));
+
+    loadUsersToTable();
     }
+    private void loadUsersToTable() {
+    // Xóa dữ liệu cũ trên bảng để chuẩn bị tải dữ liệu mới
+    tableModel.setRowCount(0); 
+    
+    // Gọi DAO để lấy danh sách tất cả người dùng từ CSDL
+    List<User> userList = userDAO.getAllUsers();
+    
+    // Duyệt qua danh sách người dùng
+    for (User user : userList) {
+        // Thêm một hàng mới vào bảng với thông tin của từng người dùng
+        tableModel.addRow(new Object[]{
+            user.getId(),
+            user.getUsername(),
+            user.getFullName(),
+            user.getRole()
+        });
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,19 +57,189 @@ public class UserManagementPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane = new javax.swing.JScrollPane();
+        tblUsers = new javax.swing.JTable();
+        lblTitle = new javax.swing.JLabel();
+        btnDeleteUser = new javax.swing.JButton();
+        cmbRole = new javax.swing.JComboBox<>();
+        btnSetRole = new javax.swing.JButton();
+        lblRole = new javax.swing.JLabel();
+        btnThemNhanVien = new javax.swing.JButton();
+
+        tblUsers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane.setViewportView(tblUsers);
+
+        lblTitle.setText("                Quản Lý Người Dùng");
+
+        btnDeleteUser.setText("Xoá người dùng");
+        btnDeleteUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteUserActionPerformed(evt);
+            }
+        });
+
+        cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbRoleActionPerformed(evt);
+            }
+        });
+
+        btnSetRole.setText("Cập nhật vai trò");
+        btnSetRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSetRoleActionPerformed(evt);
+            }
+        });
+
+        lblRole.setText("Chọn vai trò mới");
+
+        btnThemNhanVien.setText("Thêm Nhân Viên");
+        btnThemNhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemNhanVienActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 584, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(203, 203, 203)
+                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnThemNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addComponent(lblRole, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(cmbRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(btnSetRole)
+                .addGap(50, 50, 50))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 419, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(78, 78, 78)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDeleteUser)
+                    .addComponent(cmbRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSetRole)
+                    .addComponent(lblRole, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnThemNhanVien)
+                .addContainerGap(56, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
+       int selectedRow = tblUsers.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một người dùng để xóa.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Lấy username từ tblUsers
+    String username = (String) tblUsers.getValueAt(selectedRow, 1);
+    if ("admin".equalsIgnoreCase(username)) {
+        JOptionPane.showMessageDialog(this, "Không thể xóa tài khoản admin gốc.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa người dùng '" + username + "' không?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        // Lấy ID từ tblUsers
+        int userId = (int) tblUsers.getValueAt(selectedRow, 0);
+        boolean success = userDAO.deleteUser(userId);
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Xóa người dùng thành công!");
+            loadUsersToTable();
+        } else {
+            JOptionPane.showMessageDialog(this, "Xóa người dùng thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    }//GEN-LAST:event_btnDeleteUserActionPerformed
+
+    private void cmbRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRoleActionPerformed
+        
+    }//GEN-LAST:event_cmbRoleActionPerformed
+
+    private void btnSetRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetRoleActionPerformed
+        int selectedRow = tblUsers.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một người dùng để cập nhật.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Lấy username từ tblUsers
+    String username = (String) tblUsers.getValueAt(selectedRow, 1);
+    if ("admin".equalsIgnoreCase(username)) {
+        JOptionPane.showMessageDialog(this, "Không thể thay đổi vai trò của tài khoản admin gốc.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Lấy ID từ tblUsers
+    int userId = (int) tblUsers.getValueAt(selectedRow, 0);
+    String newRole = (String) cmbRole.getSelectedItem();
+
+    boolean success = userDAO.updateUserRole(userId, newRole);
+    if (success) {
+        JOptionPane.showMessageDialog(this, "Cập nhật vai trò thành công!");
+        loadUsersToTable();
+    } else {
+        JOptionPane.showMessageDialog(this, "Cập nhật vai trò thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_btnSetRoleActionPerformed
+
+    private void btnThemNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNhanVienActionPerformed
+        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+    // Tạo và hiển thị dialog
+    CreateStaffDialog createStaffDialog = new CreateStaffDialog(parentFrame, true);
+    createStaffDialog.setVisible(true);
+
+    // Sau khi dialog đóng lại, tải lại danh sách người dùng để cập nhật
+    loadUsersToTable();
+    }//GEN-LAST:event_btnThemNhanVienActionPerformed
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDeleteUser;
+    private javax.swing.JButton btnSetRole;
+    private javax.swing.JButton btnThemNhanVien;
+    private javax.swing.JComboBox<String> cmbRole;
+    private javax.swing.JScrollPane jScrollPane;
+    private javax.swing.JLabel lblRole;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JTable tblUsers;
     // End of variables declaration//GEN-END:variables
 }

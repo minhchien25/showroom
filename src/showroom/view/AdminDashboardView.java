@@ -4,6 +4,7 @@ package showroom.view;
 import showroom.model.Car;
 import showroom.DAO.CarDAO;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -71,8 +72,8 @@ private void loadDataToTable() {
         btnDeleteCar = new javax.swing.JButton();
         btnAddCar = new javax.swing.JButton();
         btnEditCar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnQuanLyNguoiDung = new javax.swing.JButton();
+        btnThongKe = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -114,9 +115,14 @@ private void loadDataToTable() {
             }
         });
 
-        jButton1.setText("Quản lí người dùng");
+        btnQuanLyNguoiDung.setText("Quản lí người dùng");
+        btnQuanLyNguoiDung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuanLyNguoiDungActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Thống kê");
+        btnThongKe.setText("Thống kê");
 
         jLabel2.setText("CHỨC NĂNG");
 
@@ -130,7 +136,7 @@ private void loadDataToTable() {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1))
+                        .addComponent(btnQuanLyNguoiDung))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -140,7 +146,7 @@ private void loadDataToTable() {
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addComponent(jButton2)))
+                        .addComponent(btnThongKe)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -173,11 +179,11 @@ private void loadDataToTable() {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDeleteCar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnQuanLyNguoiDung, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
+                        .addComponent(btnThongKe)
                         .addGap(27, 27, 27)))
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -192,7 +198,7 @@ private void loadDataToTable() {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -283,6 +289,21 @@ private void loadDataToTable() {
         e.printStackTrace(); // và in lỗi đỏ ra console
     }
     }//GEN-LAST:event_btnEditCarActionPerformed
+
+    private void btnQuanLyNguoiDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuanLyNguoiDungActionPerformed
+        
+        // Tạo một cửa sổ (Frame) mới để chứa panel quản lý người dùng
+    JFrame userManagementFrame = new JFrame("Quản Lý Người Dùng");
+    
+    // Thêm UserManagementPanel vào cửa sổ
+    userManagementFrame.add(new UserManagementPanel());
+    
+    // Thiết lập các thuộc tính cho cửa sổ
+    userManagementFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Chỉ đóng cửa sổ này
+    userManagementFrame.pack(); // Tự động điều chỉnh kích thước
+    userManagementFrame.setLocationRelativeTo(this); // Hiển thị ở giữa Dashboard
+    userManagementFrame.setVisible(true); // Hiển thị cửa sổ
+    }//GEN-LAST:event_btnQuanLyNguoiDungActionPerformed
     
    
     
@@ -332,8 +353,8 @@ private void loadDataToTable() {
     private javax.swing.JButton btnAddCar;
     private javax.swing.JButton btnDeleteCar;
     private javax.swing.JButton btnEditCar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnQuanLyNguoiDung;
+    private javax.swing.JButton btnThongKe;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
