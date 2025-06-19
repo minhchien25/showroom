@@ -1,89 +1,111 @@
 package showroom.DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import showroom.model.Customers;
-import showroom.util.DatabaseConnection;
+import showroom.model.Customers; //
+import showroom.util.DatabaseConnection; //
+
+import java.sql.Connection; //
+import java.sql.PreparedStatement; //
+import java.sql.ResultSet; //
+import java.sql.SQLException; //
+import java.sql.Statement; //
+import java.util.ArrayList; //
+import java.util.List; //
 
 public class CustomerDAO {
 
-    // Lấy danh sách tất cả khách hàng
-    public List<Customers> getAllCustomers() {
-        List<Customers> customerList = new ArrayList<>();
-        String sql = "SELECT * FROM customers";
+    public boolean addCustomer(Customers customer) { // Sử dụng Customers theo tên file model
+        String sql = "INSERT INTO Customers (full_name, address, phone_number, email) VALUES (?, ?, ?, ?)"; // Đã sửa tên cột
+        try (Connection conn = DatabaseConnection.getConnection(); //
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) { //
+            pstmt.setString(1, customer.getFullName()); // Đã thay đổi từ getName()
+            pstmt.setString(2, customer.getAddress()); //
+            pstmt.setString(3, customer.getPhoneNumber()); // Đã thay đổi từ getPhone()
+            pstmt.setString(4, customer.getEmail()); //
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+            int affectedRows = pstmt.executeUpdate(); //
 
-            while (rs.next()) {
-                Customers customer = new Customers();
-                customer.setCustomerId(rs.getInt("customer_id"));
-                customer.setFullName(rs.getString("full_name"));
-                customer.setAddress(rs.getString("address"));
-                customer.setPhoneNumber(rs.getString("phone_number"));
-                customer.setEmail(rs.getString("email"));
-                customerList.add(customer);
+            if (affectedRows > 0) { //
+                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) { //
+                    if (generatedKeys.next()) { //
+                        customer.setCustomerId(generatedKeys.getInt(1)); //
+                    }
+                }
+                return true; //
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) { //
+            e.printStackTrace(); //
         }
-        return customerList;
+        return false; //
     }
-    
-    // Thêm một khách hàng mới
-    public boolean addCustomer(Customers customer) {
-        String sql = "INSERT INTO customers(full_name, address, phone_number, email) VALUES(?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setString(1, customer.getFullName());
-            pstmt.setString(2, customer.getAddress());
-            pstmt.setString(3, customer.getPhoneNumber());
-            pstmt.setString(4, customer.getEmail());
-            
-            return pstmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+
+    public List<Customers> getAllCustomers() {
+        List<Customers> customers = new ArrayList<>(); //
+        String sql = "SELECT customer_id, full_name, address, phone_number, email FROM Customers"; // Đã sửa tên cột
+        try (Connection conn = DatabaseConnection.getConnection(); //
+             Statement stmt = conn.createStatement(); //
+             ResultSet rs = stmt.executeQuery(sql)) { //
+            while (rs.next()) { //
+                Customers customer = new Customers(); //
+                customer.setCustomerId(rs.getInt("customer_id")); //
+                customer.setFullName(rs.getString("full_name")); // Đã thay đổi từ setName()
+                customer.setAddress(rs.getString("address")); //
+                customer.setPhoneNumber(rs.getString("phone_number")); // Đã thay đổi từ setPhone()
+                customer.setEmail(rs.getString("email")); //
+                customers.add(customer); //
+            }
+        } catch (SQLException e) { //
+            e.printStackTrace(); //
         }
+        return customers; //
     }
-    
-    // Cập nhật thông tin một khách hàng
+
     public boolean updateCustomer(Customers customer) {
-        String sql = "UPDATE customers SET full_name = ?, address = ?, phone_number = ?, email = ? WHERE customer_id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setString(1, customer.getFullName());
-            pstmt.setString(2, customer.getAddress());
-            pstmt.setString(3, customer.getPhoneNumber());
-            pstmt.setString(4, customer.getEmail());
-            pstmt.setInt(5, customer.getCustomerId());
-            
-            return pstmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+        String sql = "UPDATE Customers SET full_name = ?, address = ?, phone_number = ?, email = ? WHERE customer_id = ?"; // Đã sửa tên cột
+        try (Connection conn = DatabaseConnection.getConnection(); //
+             PreparedStatement pstmt = conn.prepareStatement(sql)) { //
+            pstmt.setString(1, customer.getFullName()); // Đã thay đổi từ getName()
+            pstmt.setString(2, customer.getAddress()); //
+            pstmt.setString(3, customer.getPhoneNumber()); // Đã thay đổi từ getPhone()
+            pstmt.setString(4, customer.getEmail()); //
+            pstmt.setInt(5, customer.getCustomerId()); //
+            return pstmt.executeUpdate() > 0; //
+        } catch (SQLException e) { //
+            e.printStackTrace(); //
         }
+        return false; //
     }
-    
-    // Xóa một khách hàng
+
     public boolean deleteCustomer(int customerId) {
-        String sql = "DELETE FROM customers WHERE customer_id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, customerId);
-            return pstmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+        String sql = "DELETE FROM Customers WHERE customer_id = ?"; //
+        try (Connection conn = DatabaseConnection.getConnection(); //
+             PreparedStatement pstmt = conn.prepareStatement(sql)) { //
+            pstmt.setInt(1, customerId); //
+            return pstmt.executeUpdate() > 0; //
+        } catch (SQLException e) { //
+            e.printStackTrace(); //
         }
+        return false; //
+    }
+
+    public Customers getCustomerById(int customerId) {
+        String sql = "SELECT customer_id, full_name, address, phone_number, email FROM Customers WHERE customer_id = ?"; // Đã sửa tên cột
+        Customers customer = null; //
+        try (Connection conn = DatabaseConnection.getConnection(); //
+             PreparedStatement pstmt = conn.prepareStatement(sql)) { //
+            pstmt.setInt(1, customerId); //
+            try (ResultSet rs = pstmt.executeQuery()) { //
+                if (rs.next()) { //
+                    customer = new Customers(); //
+                    customer.setCustomerId(rs.getInt("customer_id")); //
+                    customer.setFullName(rs.getString("full_name")); // Đã thay đổi từ setName()
+                    customer.setAddress(rs.getString("address")); //
+                    customer.setPhoneNumber(rs.getString("phone_number")); // Đã thay đổi từ setPhone()
+                    customer.setEmail(rs.getString("email")); //
+                }
+            }
+        } catch (SQLException e) { //
+            e.printStackTrace(); //
+        }
+        return customer; //
     }
 }
