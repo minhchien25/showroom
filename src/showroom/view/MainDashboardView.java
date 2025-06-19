@@ -123,6 +123,11 @@ private void loadDataToTable() {
         });
 
         btnThongKe.setText("Thống kê");
+        btnThongKe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThongKeActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("CHỨC NĂNG");
 
@@ -302,6 +307,11 @@ private void loadDataToTable() {
     customerFrame.setLocationRelativeTo(this);
     customerFrame.setVisible(true);
     }//GEN-LAST:event_btnQuanLyKhachHangActionPerformed
+
+    private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
+    ThongKe thongKeDialog = new ThongKe(this, true);
+    thongKeDialog.setVisible(true);
+    }//GEN-LAST:event_btnThongKeActionPerformed
     
    
     

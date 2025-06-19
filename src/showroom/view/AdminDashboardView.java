@@ -1,5 +1,7 @@
 
 package showroom.view;
+import showroom.view.ThongKe;
+
 
 import showroom.model.Car;
 import showroom.DAO.CarDAO;
@@ -15,7 +17,7 @@ public class AdminDashboardView extends javax.swing.JFrame {
     private DefaultTableModel tableModel;
     public AdminDashboardView() {
         initComponents();
-        this.setLocationRelativeTo(null); // Căn giữa cửa sổ
+        this.setLocationRelativeTo(null)    ; // Căn giữa cửa sổ
 
     // Khởi tạo các đối tượng cần thiết
     carDAO = new CarDAO();
@@ -123,6 +125,11 @@ private void loadDataToTable() {
         });
 
         btnThongKe.setText("Thống kê");
+        btnThongKe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThongKeActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("CHỨC NĂNG");
 
@@ -304,6 +311,11 @@ private void loadDataToTable() {
     userManagementFrame.setLocationRelativeTo(this); // Hiển thị ở giữa Dashboard
     userManagementFrame.setVisible(true); // Hiển thị cửa sổ
     }//GEN-LAST:event_btnQuanLyNguoiDungActionPerformed
+
+    private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
+    ThongKe thongKeDialog = new ThongKe(this, true);
+    thongKeDialog.setVisible(true);
+    }//GEN-LAST:event_btnThongKeActionPerformed
     
    
     
