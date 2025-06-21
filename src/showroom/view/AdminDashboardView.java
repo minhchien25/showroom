@@ -1,11 +1,14 @@
 
 package showroom.view;
+import java.awt.Image;
+import java.net.URL;
 import showroom.view.ThongKe;
 
 
 import showroom.model.Car;
 import showroom.DAO.CarDAO;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -15,21 +18,54 @@ public class AdminDashboardView extends javax.swing.JFrame {
 
     private CarDAO carDAO;
     private DefaultTableModel tableModel;
-    public AdminDashboardView() {
+   // HÃY COPY TOÀN BỘ ĐOẠN CODE NÀY
+// Trong constructor của file AdminDashboardView.java
+
+public AdminDashboardView() {
         initComponents();
-        this.setLocationRelativeTo(null)    ; // Căn giữa cửa sổ
+        setupUIComponents(); // Gọi phương thức cài đặt giao diện
+        loadDataToTable();
+    }
+    
+    /**
+     * Phương thức tập trung cho việc cài đặt giao diện và tải tài nguyên.
+     */
+    private void setupUIComponents() {
+        this.setLocationRelativeTo(null);
+        carDAO = new CarDAO();
+        tableModel = (DefaultTableModel) tblCars.getModel();
+        tableModel.setColumnIdentifiers(new Object[]{
+            "ID", "Tên Xe", "Hãng Sản Xuất", "Năm SX", "Màu Sắc", "Kiểu Dáng", "Giá Bán", "Số Lượng Tồn", "Mô Tả",
+        });
 
-    // Khởi tạo các đối tượng cần thiết
-    carDAO = new CarDAO();
-    tableModel = (DefaultTableModel) tblCars.getModel();
+        // Đặt biểu tượng cho các nút với kích thước tùy chỉnh
+        int iconSize = 24; // Kích thước chung cho các biểu tượng
+        
+        btnAddCar.setIcon(createScaledIcon("/showroom/resources/icons/add.png", iconSize, iconSize));
+        btnEditCar.setIcon(createScaledIcon("/showroom/resources/icons/editing.png", iconSize, iconSize));
+        btnDeleteCar.setIcon(createScaledIcon("/showroom/resources/icons/x-mark.png", iconSize, iconSize));
+        btnQuanLyNguoiDung.setIcon(createScaledIcon("/showroom/resources/icons/profile.png", iconSize, iconSize));
+        btnThongKe.setIcon(createScaledIcon("/showroom/resources/icons/progress.png", iconSize, iconSize));
+    }
 
-    // Đặt tên cho các cột của bảng
-    tableModel.setColumnIdentifiers(new Object[]{
-        "ID", "Tên Xe", "Hãng Sản Xuất", "Năm SX", "Màu Sắc","Kiểu Dáng","Giá Bán", "Số Lượng Tồn","Mô Tả",
-    });
-
-    // Gọi phương thức để tải dữ liệu lên bảng
-    loadDataToTable();
+    /**
+     * Phương thức trợ giúp để tải và thay đổi kích thước của một ImageIcon.
+     * @param path Đường dẫn đến tệp biểu tượng trong classpath.
+     * @param width Chiều rộng mong muốn.
+     * @param height Chiều cao mong muốn.
+     * @return một ImageIcon đã được thay đổi kích thước, hoặc null nếu không tìm thấy tệp.
+     */
+    private ImageIcon createScaledIcon(String path, int width, int height) {
+        URL iconURL = getClass().getResource(path);
+        if (iconURL != null) {
+            ImageIcon originalIcon = new ImageIcon(iconURL);
+            Image originalImage = originalIcon.getImage();
+            Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            return new ImageIcon(scaledImage);
+        } else {
+            System.err.println("Không tìm thấy tệp tài nguyên: " + path);
+            return null;
+        }
     }
 private void loadDataToTable() {
     try {
@@ -103,7 +139,7 @@ private void loadDataToTable() {
             }
         });
 
-        btnAddCar.setText("Thêm xe");
+        btnAddCar.setText("Thêm Xe");
         btnAddCar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddCarActionPerformed(evt);
@@ -140,57 +176,57 @@ private void loadDataToTable() {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(115, 115, 115)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnQuanLyNguoiDung))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnDeleteCar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEditCar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAddCar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAddCar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
+                        .addContainerGap()
+                        .addComponent(btnQuanLyNguoiDung))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
                         .addComponent(btnThongKe)))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 706, Short.MAX_VALUE)
-                        .addGap(17, 17, 17))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(64, 64, 64)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAddCar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnEditCar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnDeleteCar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnQuanLyNguoiDung, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnThongKe)
-                        .addGap(27, 27, 27)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnThongKe))
+                    .addComponent(jScrollPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -205,8 +241,8 @@ private void loadDataToTable() {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

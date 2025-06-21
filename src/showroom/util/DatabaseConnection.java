@@ -16,7 +16,7 @@ public class DatabaseConnection {
             e.printStackTrace();
             throw new SQLException("SQLite JDBC Driver not found.");
         }
-        return DriverManager.getConnection(URL); // SQLite không cần tên người dùng/mật khẩu cho tệp cơ sở dữ liệu
+        return DriverManager.getConnection(URL); 
     }
 
     public static void initializeDatabase() {
