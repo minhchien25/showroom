@@ -139,6 +139,8 @@ private void loadDataToTable() {
             }
         });
 
+        btnAddCar.setBackground(new java.awt.Color(153, 255, 153));
+        btnAddCar.setForeground(new java.awt.Color(255, 153, 153));
         btnAddCar.setText("Thêm Xe");
         btnAddCar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

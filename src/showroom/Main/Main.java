@@ -1,13 +1,13 @@
 package showroom.Main;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
+
 import showroom.view.LoginView;
 import showroom.util.DatabaseConnection; // Import the DatabaseConnection
 
 public class Main {
     public static void main(String[] args) {
 
-         FlatDarculaLaf.setup();
+   
 
                DatabaseConnection.initializeDatabase(); 
 

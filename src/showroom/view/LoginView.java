@@ -49,8 +49,12 @@ public class LoginView extends javax.swing.JFrame {
 
         jLabel3.setText("Tên đăng nhập :");
 
+        jLabel4.setBackground(new java.awt.Color(102, 255, 102));
+        jLabel4.setForeground(new java.awt.Color(0, 204, 153));
         jLabel4.setText("    Mật khẩu :");
 
+        btnLogin.setBackground(new java.awt.Color(51, 204, 255));
+        btnLogin.setForeground(new java.awt.Color(30, 30, 30));
         btnLogin.setText("Đăng nhập");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
